@@ -1,21 +1,22 @@
+import { UUID } from 'crypto'
 import MatchHistory from './MatchHistorie'
 import type { Participant, ParticipantTeam } from './Participant'
-import type RefereeSign from './RefereeSign'
 import type Score from './Score'
 
-export type MatchStatus = 'open' | 'winWhite' | 'winRed' | 'undecided'
+export type MatchStatus = 'open' | 'winWhite' | 'winRed' | 'undecided' | 'omitted'
 
 export abstract class MatchBase {
   public Position: Number = 0
-  public Key: string
-  public WeightClassKey: string
+  public Key: UUID
+  public WeightClassKey: UUID
   public ScoreRed: Score | undefined
   public ScoreWhite: Score | undefined
   public Status: MatchStatus = 'open'
 
-  public constructor (weightClassKey: string, Status: MatchStatus, key?: string) {
-    this.Key = key ?? Date.now().toString(36) + Math.random().toString(36).substring(2)
+  public constructor (weightClassKey: UUID, Status: MatchStatus, position: number, key?: UUID) {
+    this.Key = key ?? crypto.randomUUID()
     this.WeightClassKey = weightClassKey
+    this.Position = position
   }
 }
 
@@ -25,8 +26,8 @@ export class MatchSingle extends MatchBase {
   public ParticipantRed: Participant
   public MatchHistory: MatchHistory
 
-  public constructor (weightClassKey: string, Status: MatchStatus, white: Participant, red: Participant, key?: string, matchHistory?: MatchHistory) {
-    super(weightClassKey, Status, key)
+  public constructor (weightClassKey: UUID, white: Participant, red: Participant, position: number, Status?: MatchStatus, matchHistory?: MatchHistory) {
+    super(weightClassKey, Status ?? 'open', position)
     this.ParticipantRed = red
     this.ParticipantWhite = white
     this.MatchHistory = matchHistory ?? new MatchHistory()
@@ -39,8 +40,8 @@ export class MatchTeam extends MatchBase {
   public TeamWhite: ParticipantTeam
   public Matches: MatchSingle[] = []
 
-  public constructor (weightClassKey: string, Status: MatchStatus, teamWhite: ParticipantTeam, teamRed: ParticipantTeam, key?: string) {
-    super(weightClassKey, Status, key)
+  public constructor (weightClassKey: UUID, Status: MatchStatus, teamWhite: ParticipantTeam, teamRed: ParticipantTeam, position: number, key?: UUID) {
+    super(weightClassKey, Status, position, key)
     this.TeamRed = teamRed
     this.TeamWhite = teamWhite
   }

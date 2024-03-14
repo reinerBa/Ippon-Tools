@@ -1,24 +1,17 @@
-import type { Participant, ParticipantBase } from './Participant'
+import { UUID } from 'crypto'
 
 export default class WeightClass {
-  public Key: string
+  public Key: UUID
   public Name: string
 
   public minWeight: number
   public maxWeight: number
-  public Participants: ParticipantBase[] = []
+  public ParticipantKeys: UUID[] = []
 
-  public constructor (name: string, minWeight: number, maxWeight: number, key?: string) {
+  public constructor (name: string, minWeight: number, maxWeight: number, key?: UUID) {
     this.Name = name
     this.minWeight = minWeight
     this.maxWeight = maxWeight
-    this.Key = key ?? Date.now().toString(36) + Math.random().toString(36).substring(2)
-  }
-}
-
-export class ListSystem {
-  public Name: string
-  public constructor (name: string) {
-    this.Name = name
+    this.Key = key ?? crypto.randomUUID()
   }
 }

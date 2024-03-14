@@ -1,13 +1,13 @@
 import express from 'express'
 import ViteExpress from 'vite-express'
 import swaggerUi from 'swagger-ui-express'
-import { routes } from "./routes";
-import swaggerOutput from "./swagger_output.json"
+import { routes } from './routes'
+import swaggerOutput from './swagger_output.json'
 
 const app = express()
 
 app.use('/', routes)
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerOutput))
 
 app.get('/hello', (_, res) => {
   res.send('Hello Vite + Vue + TypeScript!')

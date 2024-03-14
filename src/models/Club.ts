@@ -1,3 +1,3 @@
 export default class Club {
-    public Name!: string
+  public Name!: string
 }
