@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "version": "v1.0.0",
-    "title": "Swagger Demo Project",
-    "description": "Implementation of Swagger with TypeScript"
+    "title": "Ippon-Tools Project",
+    "description": "Implementation of APIS to consume with Ipponboard and web apps"
   },
   "servers": [
     {
@@ -14,6 +14,59 @@
   "paths": {
     "/api/match/getMatches": {
       "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/match/getTournament/{Key}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "Key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/match/getTournaments": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/match/getTournamentsShort": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/match/matchSingle": {
+      "post": {
         "description": "",
         "responses": {
           "200": {
